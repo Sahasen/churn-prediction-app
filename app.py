@@ -30,17 +30,17 @@ st.set_page_config(
 
 @st.cache_resource
 def load_artifacts():
-    with open("models/best_model.pkl", "rb") as f:
+    with open("best_model.pkl", "rb") as f:
         model = pickle.load(f)
-    with open("models/scaler.pkl", "rb") as f:
+    with open("scaler.pkl", "rb") as f:
         scaler = pickle.load(f)
-    with open("models/feature_columns.pkl", "rb") as f:
+    with open("feature_columns.pkl", "rb") as f:
         feature_cols = pickle.load(f)
-    with open("models/best_model_name.json", "r") as f:
+    with open("best_model_name.json", "r") as f:
         best_model_name = json.load(f)["best_model_name"]
-    importance_df = pd.read_csv("outputs/feature_importance.csv")
-    comparison_df = pd.read_csv("outputs/model_comparison.csv")
-    test_preds = pd.read_csv("outputs/test_predictions.csv")
+    importance_df = pd.read_csv("feature_importance.csv")
+    comparison_df = pd.read_csv("model_comparison.csv")
+    test_preds = pd.read_csv("test_predictions.csv")
     return model, scaler, feature_cols, best_model_name, importance_df, comparison_df, test_preds
 
 
@@ -350,7 +350,7 @@ elif page == "Feature Importance Dashboard":
     st.dataframe(importance_df, use_container_width=True)
 
     try:
-        with open("outputs/shap_values.pkl", "rb") as f:
+        with open("shap_values.pkl", "rb") as f:
             shap_data = pickle.load(f)
         st.subheader("SHAP Summary (sample of test customers)")
         st.caption(
