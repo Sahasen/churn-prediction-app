@@ -1,0 +1,15 @@
+mkdir -p /mnt/user-data/outputs && cat > /mnt/user-data/outputs/render.yaml << 'EOF'
+services:
+  - type: web
+    name: churn-prediction-app
+    env: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "streamlit run app.py --server.port $PORT --server.address 0.0.0.0"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+EOF
+cat > /mnt/user-data/outputs/Procfile << 'EOF'
+web: streamlit run app.py --server.port $PORT --server.address 0.0.0.0
+EOF
+echo done
